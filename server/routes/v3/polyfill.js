@@ -5,8 +5,6 @@ const getPolyfillParameters = require("../../lib/get-polyfill-parameters");
 const latestVersion = require("polyfill-library/package.json").version;
 const polyfillio = require("polyfill-library");
 const polyfillio_3_27_4 = require("polyfill-library-3.27.4");
-const polyfillio_3_25_3 = require("polyfill-library-3.25.3");
-const polyfillio_3_25_1 = require("polyfill-library-3.25.1");
 const polyfillio_3_28_1 = require("polyfill-library-3.28.1");
 const polyfillio_3_34_0 = require("polyfill-library-3.34.0");
 const polyfillio_3_35_0 = require("polyfill-library-3.35.0");
@@ -64,27 +62,6 @@ module.exports = app => {
 			}
 			case "3.27.4": {
 				const bundle = await polyfillio_3_27_4.getPolyfillString(params);
-				await respondWithBundle(response, params, bundle);
-				break;
-			}
-			case "3.25.3":
-			case "3.25.2": {
-				let bundle = await polyfillio_3_25_3.getPolyfillString(params);
-
-				if (params.callback) {
-					bundle += "\ntypeof " + params.callback + "==='function' && " + params.callback + "();";
-				}
-
-				await respondWithBundle(response, params, bundle);
-				break;
-			}
-			case "3.25.1": {
-				let bundle = await polyfillio_3_25_1.getPolyfillString(params);
-
-				if (params.callback) {
-					bundle += "\ntypeof " + params.callback + "==='function' && " + params.callback + "();";
-				}
-
 				await respondWithBundle(response, params, bundle);
 				break;
 			}

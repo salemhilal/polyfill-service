@@ -19,22 +19,23 @@
   "scripts": {
     "fmt": "terraform fmt fastly/terraform/ && eslint . --fix",
     "lint": "eslint .",
-    "start": "./start_server.sh server/index.js",
-    "test": "run-s test:*",
+    "start": "echo starting your server; ./start_server.sh server/index.js",
+    "test": "./node_modules/.bin/run-s test:*",
     "test:unit": "nyc --reporter=lcov --reporter=text mocha test/unit/**/*.test.js --recursive",
     "test:integration": "mocha test/integration/*.test.js test/integration/**/*.test.js --recursive --bail --delay --check-leaks --forbid-only --forbid-pending",
-    "clean": "rimraf ./dist ./.cache ./.cache_eleventy",
-    "build": "run-s production",
-    "build:dev": "run-s production:*",
+    "clean": "./node_modules/.bin/rimraf ./dist ./.cache ./.cache_eleventy",
+    "build": "./node_modules/.bin/run-s production",
+    "gcp-build": "echo running gcp-build; ./node_modules/.bin/run-s production",
+    "build:dev": "./node_modules/.bin/run-s production:*",
     "dev": "npm run clean && nodemon --exec \"time npm run build:dev && npm run start\"",
-    "production": "run-s clean production:*",
-    "production:eleventy": "eleventy",
-    "production:parcel": "parcel build ./.cache_eleventy/**/*.html ./.cache_eleventy/*.html --out-dir ./dist/v3 --public-url /v3"
+    "production": "./node_modules/.bin/run-s production:*",
+    "production:eleventy": "./node_modules/.bin/eleventy",
+    "production:parcel": "./node_modules/.bin/parcel build ./.cache_eleventy/**/*.html ./.cache_eleventy/*.html --out-dir ./dist/v3 --public-url /v3"
   },
   "heroku-run-build-script": true,
   "license": "MIT",
   "engines": {
-    "node": "8.10 - 11",
+    "node": "10.*",
     "npm": ">=6.9.0"
   },
   "dependencies": {
@@ -46,8 +47,6 @@
     "express-extractheaders": "^3.0.0",
     "iltorb": "^2.4.3",
     "polyfill-library": "^3.38.0",
-    "polyfill-library-3.25.1": "npm:polyfill-library@3.25.1",
-    "polyfill-library-3.25.3": "npm:polyfill-service@3.25.3",
     "polyfill-library-3.27.4": "npm:polyfill-library@3.27.4",
     "polyfill-library-3.28.1": "npm:polyfill-library@3.28.1",
     "polyfill-library-3.34.0": "npm:polyfill-library@3.34.0",
